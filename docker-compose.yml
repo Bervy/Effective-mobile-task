@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  main-server:
+    restart: "no"
+    build: main server
+    container_name: effective_main_server_container
+    ports:
+      - "8000:8000"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-server-db:5432/postgres
+    depends_on:
+      -   main-server-db
+
+  main-server-db:
+    image: postgres:13.7-alpine
+    container_name: main-server-db_container
+    restart: "no"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=main
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
